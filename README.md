@@ -1,0 +1,1 @@
+фронт через pages [index.html](https://sergeypostnikov.github.io/BeautySalon/index.html)
