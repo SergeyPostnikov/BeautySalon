@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as auth_logout
 
-# Create your views here.
+
+def logout(request):
+    auth_logout(request)
+    return render(request,"index.html");
+
+
 def index(request):
     salons = [
         {
