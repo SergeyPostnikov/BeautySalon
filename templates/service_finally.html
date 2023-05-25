@@ -7,58 +7,63 @@
 				<div class="row">
 					<div class="col-md-6 col-lg-6">
 						<div class="breadCrumbs">
-							<a href="#" class="breadCrumbs__item">На главную</a>
+							<a href="{% url 'index' %}" class="breadCrumbs__item">На главную</a>
 						</div>
 						<div class="service__block">
 							<h1 class="service__title">Запись на услугу</h1>
 						</div>
-						<form action="#" class="serviceFinally__form">
+						<form action="{% url 'service_finally' %}" class="serviceFinally__form" method="POST">
+							{% csrf_token %}
 							<div class="serviceFinally__form_block">
 								<div class="serviceFinally__form_header fic">
-									<span class="serviceFinally__form_header__number">Запись №32985</span>
+									<span class="serviceFinally__form_header__number">Запись № {{record.id}}</span>
 									<div class="serviceFinally__form_header__item fic">
-										<div class="serviceFinally__form_header__service">BeautyCity Пушкинская</div>
-										<div class="serviceFinally__form_header__address">ул. Пушкинская, д. 78А</div>
+										<div class="serviceFinally__form_header__service">{{record.salon_name}}</div>
+										<div class="serviceFinally__form_header__address">{{record.salon_address}}</div>
 									</div>
 								</div>
 								<div class="serviceFinally__form_content">
 									<div class="serviceFinally__form_content__block fic">
-										<div class="serviceFinally__form_content__title">Дневной макияж</div>
-										<div class="serviceFinally__form_content__price">750 ₽</div>
+										<div class="serviceFinally__form_content__title">{{record.service_name}}</div>
+										<div class="serviceFinally__form_content__price">{{record.price}} ₽</div>
 									</div>
 									<div class="serviceFinally__form_content__block fic">
 										<div class="serviceFinally__form_content__items fic">
-										  	<img src="img/masters/avatar/vizajist1.svg" alt="avatar" class="accordion__block_img">
-										  	<div class="accordion__block_master">Елена Грибнова</div>
+										  	<img src="{{record.master_photo}}" alt="avatar" class="accordion__block_img">
+										  	<div class="accordion__block_master">{{record.master_name}}</div>
 									    </div>
 									    <div class="serviceFinally__form_content__item fic">
-											<div class="serviceFinally__form_content__time">16:30</div>
-											<div class="serviceFinally__form_content__date">18 ноября</div>
+											<div class="serviceFinally__form_content__time">{{record.time}}</div>
+											<div class="serviceFinally__form_content__date">{{record.date}}</div>
 										</div>
 									</div>
 									
 								</div>
 							</div>
 							<div class="serviceFinally__form_itesm">
-								<div class="contacts__form_block fic">
-									<input type="text" name="fname" class="contacts__form_iunput" placeholder="Введите имя" required="">
-									<div class="contacts__form_inputBlock">
-										<input type="text" name="tel" class="contacts__form_iunput" placeholder="+7(999)999--99-99" required="">
+								{% if record.flag %}
+									<button type="submit" class="serviceFinallys__form_btn">Оплатить сразу</button>
+								{% else %}
+									<div class="contacts__form_block fic">
+										<input type="text" name="name" class="contacts__form_iunput" placeholder="Введите имя" required="">
+										<div class="contacts__form_inputBlock">
+											<input type="text" name="phonenumber" class="contacts__form_iunput" placeholder="+7(999)999-99-99" required="">
+										</div>
 									</div>
-								</div>
-								
-								<textarea name="contactsTextarea" class="contacts__form_textarea" placeholder="Вопрос(необязательно)"></textarea>
-								<div class="contacts__form_checkboxBlock fic">
-									<input type="checkbox" class="contacts__form_checkbox" checked="">
-									<span class="contacts__form_checkboxBlock__intro">Я согласен(а) с политикой конфидециоальности</span>
-								</div>
-								<button type="submit" class="serviceFinallys__form_btn">Записаться</button>
-								<button type="submit" class="serviceFinallys__form_back">Назад</button>
+									
+									<textarea name="comments" class="contacts__form_textarea" placeholder="Вопрос(необязательно)"></textarea>
+									<div class="contacts__form_checkboxBlock fic">
+										<input type="checkbox" class="contacts__form_checkbox" checked="">
+										<span class="contacts__form_checkboxBlock__intro">Я согласен(а) с политикой конфидециоальности</span>
+									</div>
+									<button type="submit" class="serviceFinallys__form_btn">Записаться</button>
+								{% endif %}
+								<a href="{% url 'service' %}" ><button class="serviceFinallys__form_back">Назад</button></a>
 							</div>
 						</form>	
 					</div>
 					<div class="col-md-12 col-lg-5">
-						<img src="img/bannerImg.svg" alt="bannerImg" class="banner__img">
+						<img src="{% static 'img/bannerImg.svg' %}" alt="bannerImg" class="banner__img">
 					</div>
 				</div>
 			</div>

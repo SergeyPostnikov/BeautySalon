@@ -12,6 +12,7 @@ urlpatterns = [
     path('logout', logout, name='logout'),
     path('', index, name='index'),
     path('service/', service, name='service'),
+    path('service_finally/', service_finally, name='service_finally'),
     path('dashboard/', dashboard, name='dashboard')
 ]
 

@@ -139,4 +139,27 @@ def service(request):
 
 
 def service_finally(request):
-    return render(request, 'service_finally.html')
+    print(request.method)
+    record = {
+        'id': 32985,
+        'salon_name': 'BeautyCity Пушкинская',
+        'salon_address': 'ул. Пушкинская, д. 78А',
+        'service_name': 'Дневной макияж',
+        'price': 750,
+        'master_name': 'Елена Грибнова',
+        'master_photo': '/static/img/masters/avatar/vizajist1.svg',
+        'date': '18 ноября',
+        'time': '11:00',
+        'flag': False,
+    }
+
+    if request.method == "POST":
+
+        print(request.POST['name'])
+        print(request.POST['phonenumber'])
+        record['flag'] = True
+         
+    context = {
+        'record': record,
+    }
+    return render(request, 'service_finally.html', context=context)
