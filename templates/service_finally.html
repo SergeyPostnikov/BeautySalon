@@ -12,7 +12,11 @@
 						<div class="service__block">
 							<h1 class="service__title">Запись на услугу</h1>
 						</div>
-						<form action="{% url 'service_finally' %}" class="serviceFinally__form" method="POST">
+						{% if record.active %}
+							<form action="{% url 'payment' record.id %}" class="serviceFinally__form" method="POST">
+						{% else %}
+							<form action="{% url 'service_finally' %}" class="serviceFinally__form" method="POST">
+						{% endif %}
 							{% csrf_token %}
 							<div class="serviceFinally__form_block">
 								<div class="serviceFinally__form_header fic">
@@ -41,7 +45,7 @@
 								</div>
 							</div>
 							<div class="serviceFinally__form_itesm">
-								{% if record.flag %}
+								{% if record.active %}
 									<button type="submit" class="serviceFinallys__form_btn">Оплатить сразу</button>
 								{% else %}
 									<div class="contacts__form_block fic">

@@ -1,6 +1,62 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
+from .payments import create_payment, get_payment_status
+from django.urls import reverse
+
+
+record = {  
+    'id': 32985,
+    'salon_name': 'BeautyCity Пушкинская',
+    'salon_address': 'ул. Пушкинская, д. 78А',
+    'service_name': 'Дневной макияж',
+    'price': 750,
+    'master_name': 'Елена Грибнова',
+    'master_photo': '/static/img/masters/avatar/vizajist1.svg',
+    'date': '18 ноября',
+    'time': '11:00',
+    'active': False,
+    'payment_id': '',
+    'paid': False
+}
+
+
+def payment(request, pk):
+
+    #TODO запрос из базы данных Session по pk
+
+    description = f"Оплата заказа № {record['id']} за {record['service_name']}."
+    amount = record['price']
+
+    # Создайте платеж в ЮKassa
+    payment = create_payment(
+        record['id'],
+        amount,
+        description,
+        request.build_absolute_uri(
+            reverse('payment_success', kwargs={'pk': record['id']})
+        )
+    )
+    record['payment_id'] = payment.id
+
+    # Перенаправьте пользователя на страницу оплаты
+    return redirect(payment.confirmation.confirmation_url)
+
+
+def payment_success(request, pk):
+
+    #TODO запрос из базы данных Session по pk
+
+    status = get_payment_status(record['payment_id'])
+
+    if status == 'succeeded':
+        # Найти заказ по payment_id и обновить его статус
+        record['paid'] = True
+
+    context = {
+        'record': record,
+    }
+    return render(request, 'service_finally.html', context=context)
 
 
 def logout(request):
@@ -139,25 +195,12 @@ def service(request):
 
 
 def service_finally(request):
-    print(request.method)
-    record = {
-        'id': 32985,
-        'salon_name': 'BeautyCity Пушкинская',
-        'salon_address': 'ул. Пушкинская, д. 78А',
-        'service_name': 'Дневной макияж',
-        'price': 750,
-        'master_name': 'Елена Грибнова',
-        'master_photo': '/static/img/masters/avatar/vizajist1.svg',
-        'date': '18 ноября',
-        'time': '11:00',
-        'flag': False,
-    }
 
     if request.method == "POST":
 
         print(request.POST['name'])
         print(request.POST['phonenumber'])
-        record['flag'] = True
+        record['active'] = True
          
     context = {
         'record': record,
