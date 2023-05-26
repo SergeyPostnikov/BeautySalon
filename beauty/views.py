@@ -202,12 +202,12 @@ def payment_success(request, pk):
     context = {
         'record': record,
     }
-    return render(request, 'service_finally.html', context=context)
+    return redirect('/')
 
 
 def logout(request):
     auth_logout(request)
-    return render(request,"index.html");
+    return render(request,"index.html")
 
 
 def index(request):
@@ -243,11 +243,16 @@ def service(request):
 
 def service_finally(request):
 
+    print('Update page', request.method)
+
     if request.method == "POST":
 
         print(request.POST['name'])
         print(request.POST['phonenumber'])
         record['active'] = True
+        
+    else:
+        record['active'] = False        
          
     context = {
         'record': record,

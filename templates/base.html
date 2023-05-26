@@ -164,13 +164,18 @@
             </div>
         </footer>
 
-        {% comment %} <div class="box-modal successPopup popup" id="successModal">
-            <div class="box-modal_close arcticmodal-close">
-                <img src="{% static 'img/x.svg' %}" alt="x"></div>
+        <div style="display: none;">
+            <div class="box-modal successPopup popup" id="successModal">
+                <div class="box-modal_close arcticmodal-close"><img src="{% static 'img/x.svg' %}" alt="x"></div>
                 <div class="popup__title authPopup__title">Запись прошла успешно!</div>
-                <button type="submit" class="popup__btn authPopup__btn">Продолжить</button>
+                <form action="#payment" method="POST">
+                {% csrf_token %}
+                <div>
+                    <button class="popup__btn authPopup__btn arcticmodal-close">Продолжить</button>
+                </div>
+                </form>
             </div>
-        </div> {% endcomment %}
+        </div>
 
         {% comment %} <div style="display: none;">
             <div class="box-modal authPopup popup" id="authModal">
