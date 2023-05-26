@@ -13,9 +13,12 @@
 							<h1 class="service__title">Запись на услугу</h1>
 						</div>
 						{% if record.active %}
-							<form action="{% url 'payment' record.id %}" class="serviceFinally__form" method="POST">
+							<script>
+								alert('Вы успешно записаны. Можете сразу оплатить.')
+							</script>
+							<form action="{% url 'payment' record.id %}" id="payment" class="serviceFinally__form" method="POST">
 						{% else %}
-							<form action="{% url 'service_finally' %}" class="serviceFinally__form" method="POST">
+							<form action="{% url 'service_finally' %}" id="record" class="serviceFinally__form" method="POST">
 						{% endif %}
 							{% csrf_token %}
 							<div class="serviceFinally__form_block">
