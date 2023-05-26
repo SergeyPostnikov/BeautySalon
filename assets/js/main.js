@@ -413,10 +413,10 @@ $(document).ready(function() {
 		}
 	})
 	
-	// // success popup
-	// $('#record').click(function() {
-	// 	$('#successModal').arcticmodal();
-	// 	return false
-	// })
+	// success popup
+	if ($('#payment').length > 0) {
+		$('#successModal').arcticmodal();
+		return false
+	}
 
 })

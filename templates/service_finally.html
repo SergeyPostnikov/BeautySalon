@@ -13,12 +13,9 @@
 							<h1 class="service__title">Запись на услугу</h1>
 						</div>
 						{% if record.active %}
-							<script>
-								alert('Вы успешно записаны. Можете сразу оплатить.')
-							</script>
 							<form action="{% url 'payment' record.id %}" id="payment" class="serviceFinally__form" method="POST">
 						{% else %}
-							<form action="{% url 'service_finally' %}" id="record" class="serviceFinally__form" method="POST">
+							<form action="{% url 'service_finally' %}" class="serviceFinally__form" method="POST">
 						{% endif %}
 							{% csrf_token %}
 							<div class="serviceFinally__form_block">
@@ -50,6 +47,7 @@
 							<div class="serviceFinally__form_itesm">
 								{% if record.active %}
 									<button type="submit" class="serviceFinallys__form_btn">Оплатить сразу</button>
+									<a href="{% url 'service' %}" ><button class="serviceFinallys__form_back">Назад</button></a>
 								{% else %}
 									<div class="contacts__form_block fic">
 										<input type="text" name="name" class="contacts__form_iunput" placeholder="Введите имя" required="">
@@ -64,8 +62,8 @@
 										<span class="contacts__form_checkboxBlock__intro">Я согласен(а) с политикой конфидециоальности</span>
 									</div>
 									<button type="submit" class="serviceFinallys__form_btn">Записаться</button>
+									<a href="{% url 'service' %}" ><button class="serviceFinallys__form_back">Назад</button></a>
 								{% endif %}
-								<a href="{% url 'service' %}" ><button class="serviceFinallys__form_back">Назад</button></a>
 							</div>
 						</form>	
 					</div>
