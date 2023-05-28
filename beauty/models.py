@@ -59,8 +59,8 @@ class Master(models.Model):
         'фото',
         upload_to='masters'
     )
-    work_duration = models.DurationField(
-        'стаж работы',
+    work_duration = models.IntegerField(
+        'стаж работы (лет)'
     )
 
     class Meta:
@@ -174,6 +174,11 @@ class Order(models.Model):
         verbose_name='услуга',
         on_delete=models.CASCADE
     )
+    master = models.ForeignKey(
+        Master,
+        verbose_name='мастер',
+        on_delete=models.CASCADE,
+    )
     date = models.DateField(
         'день'
     )
@@ -186,4 +191,4 @@ class Order(models.Model):
         verbose_name_plural = 'записи'
     
     def __str__(self):
-        return f'от {self.name}, оставлен {self.service}'
+        return f'от {self.client}, запись на {self.service}'
