@@ -18,6 +18,4 @@ urlpatterns = [
     path('success/<pk>', views.payment_success, name='payment_success'),
     path('payment/<pk>', views.payment, name='payment'),    
 ]
-
-if settings.DEBUG: 
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

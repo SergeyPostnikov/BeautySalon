@@ -1,3 +1,4 @@
+import os
 from environs import Env
 from pathlib import Path
 
@@ -111,7 +112,7 @@ STATIC_URL = env.str('STATIC_URL', '/static/')
 STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = env.str('MEDIA_URL', '/media/')
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 STATICFILES_DIRS = [

@@ -19,7 +19,8 @@ class Salon(models.Model):
         'работает по',
     )
     image = models.ImageField(
-        'картинка'
+        'картинка',
+        upload_to='salons'
     )
 
     class Meta:
@@ -55,10 +56,11 @@ class Master(models.Model):
         on_delete=models.CASCADE
     )
     photo = models.ImageField(
-        'фото'
+        'фото',
+        upload_to='masters'
     )
-    work_duration = models.DurationField(
-        'стаж работы',
+    work_duration = models.IntegerField(
+        'стаж работы (лет)'
     )
 
     class Meta:
@@ -67,6 +69,20 @@ class Master(models.Model):
     
     def __str__(self):
         return f'{self.fullname}, {self.profession}'
+
+
+class CategoryService(models.Model):
+    name = models.CharField(
+        'категория',
+        max_length=100
+    )
+
+    class Meta:
+        verbose_name = 'категория'
+        verbose_name_plural = 'категории'
+    
+    def __str__(self):
+        return self.name
 
 
 class Service(models.Model):
@@ -86,7 +102,8 @@ class Service(models.Model):
         validators=[MinValueValidator(0)]
     )
     image = models.ImageField(
-        'картинка'
+        'картинка',
+        upload_to='services'
     )
     master = models.ManyToManyField(
         Master,
@@ -157,6 +174,11 @@ class Order(models.Model):
         verbose_name='услуга',
         on_delete=models.CASCADE
     )
+    master = models.ForeignKey(
+        Master,
+        verbose_name='мастер',
+        on_delete=models.CASCADE,
+    )
     date = models.DateField(
         'день'
     )
@@ -169,4 +191,4 @@ class Order(models.Model):
         verbose_name_plural = 'записи'
     
     def __str__(self):
-        return f'от {self.name}, оставлен {self.service}'
+        return f'от {self.client}, запись на {self.service}'
