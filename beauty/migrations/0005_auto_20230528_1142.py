@@ -10,7 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
 def migrate_masters(apps, schema_editor):
-    print(BASE_DIR)
     Master = apps.get_model('beauty', 'Master')
     Profession = apps.get_model('beauty', 'Profession')
 

@@ -26,7 +26,7 @@ class Salon(models.Model):
     class Meta:
         verbose_name = 'салон'
         verbose_name_plural = 'салоны'
-    
+
     def __str__(self):
         return self.name
 
@@ -60,7 +60,10 @@ class Master(models.Model):
         upload_to='masters'
     )
     work_duration = models.IntegerField(
-        'стаж работы (лет)'
+        'стаж работы (лет)',
+        blank=True,
+        null=True
+
     )
 
     class Meta:
@@ -104,11 +107,20 @@ class Service(models.Model):
     )
     image = models.ImageField(
         'картинка',
-        upload_to='services'
+        upload_to='services',
+        blank=True,
+        null=True
     )
     master = models.ManyToManyField(
         Master,
         related_name='servises'
+    )
+    category = models.ForeignKey(
+        CategoryService,
+        on_delete=models.CASCADE, 
+        related_name='Категория',
+        blank=True,
+        null=True
     )
 
     class Meta:

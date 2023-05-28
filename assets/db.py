@@ -33,8 +33,8 @@ salons = [
         'image': '/static/img/salons/salon3.svg',
         'working_time': 'с 10:00 до 20:00 без выходных',
     },
-    
 ]
+
 services = [
     {
         'name': 'Макияж',
