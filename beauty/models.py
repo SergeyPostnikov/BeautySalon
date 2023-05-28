@@ -94,6 +94,7 @@ class Service(models.Model):
         'описание',
         max_length=400,
         blank=True,
+        null=True
     )
     price = models.DecimalField(
         'цена',
