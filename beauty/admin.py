@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.shortcuts import reverse
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from .models import Salon
 from .models import Profession
 from .models import Master
+from .models import CategoryService
 from .models import Service
 from .models import Client
 from .models import Review
@@ -23,12 +25,20 @@ class SalonAdmin(admin.ModelAdmin):
         'working_time_from',
         'working_time_to'
     ]
+    fields = [
+        'name',
+        'address',
+        'working_time_from',
+        'working_time_to',
+        'image',
+        'preview'
+    ]
+    readonly_fields = [
+        "preview"
+    ]
 
-    def get_image_preview(self, obj):
-        if not obj.image:
-            return 'выберите картинку'
-        return format_html('<img src="{url}" style="max-height: 200px;"/>', url=obj.image.url)
-    get_image_preview.short_description = 'превью'
+    def preview(self, obj):
+        return mark_safe(f'<img src="{obj.image.url}" style="max-height: 200px;">')
 
 
 @admin.register(Profession)
@@ -44,20 +54,26 @@ class MasterAdmin(admin.ModelAdmin):
         'fullname',
         'profession'
     ]
-    list_display = [
+    fields = [
         'fullname',
         'profession',
-        'work_duration'
+        'work_duration',
+        'photo',
+        'preview'
     ]
     readonly_fields = [
-        'get_image_preview',
+        "preview"
     ]
 
-    def get_image_preview(self, obj):
-        if not obj.photo:
-            return 'выберите картинку'
-        return format_html('<img src="{url}" style="max-height: 200px;"/>', url=obj.photo.url)
-    get_image_preview.short_description = 'превью'
+    def preview(self, obj):
+        return mark_safe(f'<img src="{obj.photo.url}" style="max-height: 200px;">')
+
+
+@admin.register(CategoryService)
+class CategoryServiceAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+    ]
 
 
 @admin.register(Service)
@@ -65,17 +81,20 @@ class ServiceAdmin(admin.ModelAdmin):
     search_fields = [
         'name'
     ]
-    list_display = [
+    fields = [
         'name',
         'description',
-        'price'
+        'price',
+        'master',
+        'image',
+        'preview'
+    ]
+    readonly_fields = [
+        "preview"
     ]
 
-    def get_image_preview(self, obj):
-        if not obj.image:
-            return 'выберите картинку'
-        return format_html('<img src="{url}" style="max-height: 200px;"/>', url=obj.image.url)
-    get_image_preview.short_description = 'превью'
+    def preview(self, obj):
+        return mark_safe(f'<img src="{obj.image.url}" style="max-height: 200px;">')
 
 
 @admin.register(Client)
