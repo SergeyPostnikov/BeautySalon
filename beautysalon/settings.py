@@ -123,9 +123,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 
 # YOOKASSA
 YOOKASSA_SHOP_ID = env('YOOKASSA_SHOP_ID', 'Your_store_number')
