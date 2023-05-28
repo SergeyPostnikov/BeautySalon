@@ -40,7 +40,7 @@ class Profession(models.Model):
     class Meta:
         verbose_name = 'профессия'
         verbose_name_plural = 'профессии'
-    
+
     def __str__(self):
         return self.name
 
@@ -52,7 +52,7 @@ class Master(models.Model):
     )
     profession = models.ForeignKey(
         Profession,
-        verbose_name='проффесия',
+        verbose_name='профессия',
         on_delete=models.CASCADE
     )
     photo = models.ImageField(
@@ -69,7 +69,7 @@ class Master(models.Model):
     class Meta:
         verbose_name = 'мастер'
         verbose_name_plural = 'мастера'
-    
+
     def __str__(self):
         return f'{self.fullname}, {self.profession}'
 
