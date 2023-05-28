@@ -7,3 +7,4 @@ phonenumbers==8.13.11
 Pillow==9.5.0
 yookassa==2.3.6
 django-phonenumber-field[phonenumbers]==7.1.0
+django-debug-toolbar==4.1.0
