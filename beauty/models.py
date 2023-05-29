@@ -26,7 +26,7 @@ class Salon(models.Model):
     class Meta:
         verbose_name = 'салон'
         verbose_name_plural = 'салоны'
-    
+
     def __str__(self):
         return self.name
 
@@ -40,7 +40,7 @@ class Profession(models.Model):
     class Meta:
         verbose_name = 'профессия'
         verbose_name_plural = 'профессии'
-    
+
     def __str__(self):
         return self.name
 
@@ -52,7 +52,7 @@ class Master(models.Model):
     )
     profession = models.ForeignKey(
         Profession,
-        verbose_name='проффесия',
+        verbose_name='профессия',
         on_delete=models.CASCADE
     )
     photo = models.ImageField(
@@ -60,13 +60,16 @@ class Master(models.Model):
         upload_to='masters'
     )
     work_duration = models.IntegerField(
-        'стаж работы (лет)'
+        'стаж работы (лет)',
+        blank=True,
+        null=True
+
     )
 
     class Meta:
         verbose_name = 'мастер'
         verbose_name_plural = 'мастера'
-    
+
     def __str__(self):
         return f'{self.fullname}, {self.profession}'
 
@@ -94,6 +97,7 @@ class Service(models.Model):
         'описание',
         max_length=400,
         blank=True,
+        null=True
     )
     price = models.DecimalField(
         'цена',
@@ -103,11 +107,20 @@ class Service(models.Model):
     )
     image = models.ImageField(
         'картинка',
-        upload_to='services'
+        upload_to='services',
+        blank=True,
+        null=True
     )
     master = models.ManyToManyField(
         Master,
         related_name='servises'
+    )
+    category = models.ForeignKey(
+        CategoryService,
+        on_delete=models.CASCADE, 
+        related_name='servises',
+        blank=True,
+        null=True
     )
 
     class Meta:
@@ -178,6 +191,7 @@ class Order(models.Model):
         Master,
         verbose_name='мастер',
         on_delete=models.CASCADE,
+        related_name='sessions'
     )
     date = models.DateField(
         'день'
@@ -185,6 +199,7 @@ class Order(models.Model):
     time = models.TimeField(
         'время'
     )
+    is_reserved = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'запись'
