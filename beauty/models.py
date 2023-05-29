@@ -118,7 +118,7 @@ class Service(models.Model):
     category = models.ForeignKey(
         CategoryService,
         on_delete=models.CASCADE, 
-        related_name='Категория',
+        related_name='servises',
         blank=True,
         null=True
     )
@@ -191,6 +191,7 @@ class Order(models.Model):
         Master,
         verbose_name='мастер',
         on_delete=models.CASCADE,
+        related_name='sessions'
     )
     date = models.DateField(
         'день'
@@ -198,6 +199,7 @@ class Order(models.Model):
     time = models.TimeField(
         'время'
     )
+    is_reserved = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'запись'

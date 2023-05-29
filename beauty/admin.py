@@ -87,7 +87,8 @@ class ServiceAdmin(admin.ModelAdmin):
         'price',
         'master',
         'image',
-        'preview'
+        'preview',
+        'category'
     ]
     readonly_fields = [
         "preview"

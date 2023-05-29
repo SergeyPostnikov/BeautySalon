@@ -5,18 +5,20 @@ from .payments import create_payment, get_payment_status
 from django.urls import reverse
 from random import shuffle
 from assets.db import record, salons, services, reviews
-from beauty.models import Master, Salon, Service
+from beauty.models import Master, Salon, Service, CategoryService
 
 
-def serialize_masters(masters_qs):
-    masters = []
-    for master_obj in masters_qs:
-        master = {
-            'photo': master_obj.photo.url,
-            'fullname': master_obj.fullname,
-            'profession': master_obj.profession,
+def get_services():
+    services = []
+    categories = CategoryService.objects.all()
+    for category in categories:
+        cat = {
+            'name': category.name,
+            'services': [service for service in Service.objects.filter(category=category)]
         }
-        masters.append(master)
+        services.append(cat)
+
+    return services
 
 
 def payment(request, pk):
@@ -86,8 +88,10 @@ def service(request):
     context = {
         'salons': Salon.objects.all(),
         'masters': Master.objects.all()[:5],
-        'services': Service.objects.all()
+        'services': get_services(),
     }
+    if request.method == "POST":
+        print(dict(request.POST))
     return render(request, 'service.html', context=context)
 
 

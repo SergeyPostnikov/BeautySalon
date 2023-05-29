@@ -4,8 +4,9 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from beauty import views
-import debug_toolbar
 from django.conf import settings
+
+import debug_toolbar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
